@@ -14,16 +14,17 @@ import java.util.UUID;
 import org.modelmapper.ModelMapper;
 
 @Primary
-@Service
+@Service // Ponto de injeção entre o controller e o repository (o controller aciona o service que aciona o repository para transacionar com o BD
 public class ParkingSpotServiceImpl implements ParkingSpotService {
+    
+    final ParkingSpotRepository parkingSpotRepository; // Ponto de injeção criado via construtor. Dizendo para o Spring quem em determinados momentos, ele vai ter que injetar uma dependência do Repository para o Service
 
-    final ParkingSpotRepository parkingSpotRepository;
-
+    // Construtor
     public ParkingSpotServiceImpl(ParkingSpotRepository parkingSpotRepository) {
         this.parkingSpotRepository = parkingSpotRepository;
     }
 
-    @Autowired
+    @Autowired // Ponto de injeção. Dizendo para o Spring quem em determinados momentos, ele vai ter que injetar uma dependência do Repository para o Service
     private ModelMapper modelMapper;
 
     @Transactional

@@ -8,7 +8,6 @@ import com.api.parkingcontrol.services.ParkingSpotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
@@ -23,10 +22,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
 import java.util.UUID;
-
-@RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/parking-spot")
+ 
+@RestController // Camada que receberá as solicitações (GET, POST, PUT, DELETE)
+@CrossOrigin(origins = "*", maxAge = 3600) // Permitir/bloquear acesso de qualquer fonte ("*" para qualquer lugar ou pode especificar) 
+@RequestMapping("/parking-spot") // Define a url que quando for requisitada chamará o metodo ou a classe (ex.: http://localhost:8080/parking-spot)
 @Scope("prototype")
 @PropertySource("classpath:custom.properties")
 public class ParkingSpotController {
