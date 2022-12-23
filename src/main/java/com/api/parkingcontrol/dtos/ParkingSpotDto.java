@@ -3,27 +3,36 @@ package com.api.parkingcontrol.dtos;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-
+// Validações antes de serem enviadas para o BD
 public class ParkingSpotDto {
 
-    @NotBlank
+    @NotBlank // Garantir que não está vazio. Se chegar vazio, retorna BAD REQUEST
     private String parkingSpotNumber;
+    
     @NotBlank
     @Size(max = 7)
     private String licensePlateCar;
+    
     @NotBlank
     private String brandCar;
+    
     @NotBlank
     private String modelCar;
+    
     @NotBlank
     private String colorCar;
+    
     @NotBlank
     private String responsibleName;
+    
     @NotBlank
     private String apartment;
+    
     @NotBlank
     private String block;
 
+    // Getters and Setters
+    // O DTO, através do JPA, vai fazer as consultas automaticamente no BD
     public String getParkingSpotNumber() {
         return parkingSpotNumber;
     }
