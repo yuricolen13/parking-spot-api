@@ -92,7 +92,7 @@ public class ParkingSpotController {
     /*
     * @GetMapping (sem paginação, sem ordenação)
         @GetMapping
-        public ResponseEntity<List<ParkingSpotModel>> getAllParkingSpotsWithoutPagintion(){
+        public ResponseEntity<List<ParkingSpotModel>> getAllParkingSpotsWithoutPagination(){
             return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll())
         }
     */
@@ -133,6 +133,7 @@ public class ParkingSpotController {
     @PutMapping("/{id}") // Atualizar por ID
     public ResponseEntity<Object> updateParkingSpot(@PathVariable(value = "id") UUID id,
             @RequestBody @Valid ParkingSpotDto parkingSpotDto) {
+        
         Optional<ParkingSpotModel> parkingSpotModelOptional = parkingSpotService.findById(id);
         
         if (!parkingSpotModelOptional.isPresent()) {
@@ -140,10 +141,26 @@ public class ParkingSpotController {
         }
         
         var parkingSpotModel = new ParkingSpotModel();
-        BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel);
+        //var parkingSpotModel = parkingSpotModelOptional.get();
+        
+        BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel); // Convertendo o DTO para Model
+        
+        // Mantém ID e data de registro, pq eles não podem ser atualizados
         parkingSpotModel.setId(parkingSpotModelOptional.get().getId());
         parkingSpotModel.setRegistrationDate(parkingSpotModelOptional.get().getRegistrationDate());
         
+        /*
+            Setando manualmente alterações (sem o BeanUtils)
+
+            parkingSpotModel.setParkingSpotNumber(parkingSpotDto.getParkingSpotNumber());
+            parkingSpotModel.setLicensePlateCar(parkingSpotDto.getLicensePlateCar());
+            parkingSpotModel.setModelCar(parkingSpotDto.getModelCar());
+            parkingSpotModel.setBrandCar(parkingSpotDto.getBrandCar());
+            parkingSpotModel.setColorCar(parkingSpotDto.getColorCar());
+            parkingSpotModel.setResponsibleName(parkingSpotDto.getResponsibleName());
+            parkingSpotModel.setApartment(parkingSpotDto.getApartment());
+            parkingSpotModel.setModelCar(parkingSpotDto.getModelCar());
+        */
         return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.save(parkingSpotModel)); // Status 200
     }
 
